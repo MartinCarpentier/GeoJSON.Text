@@ -33,7 +33,7 @@ jobs:
             $VERSION=$VERSION.substring(1)
           }
 
-          if($VERSION -match ${env:NUGET_VERSIONING_REGEX}) {
+          if(!($VERSION -match ${env:NUGET_VERSIONING_REGEX})) {
             throw "Release tag did not contain a valid NUGET version. TAG : ${env:GITHUB_REF_NAME}"
           }
           
