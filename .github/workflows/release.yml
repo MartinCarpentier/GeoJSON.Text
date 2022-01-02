@@ -41,6 +41,6 @@ jobs:
             throw "Release tag did not contain a valid NUGET version. TAG : ${env:GITHUB_REF_NAME}"
           }
           
-          echo "Version: $VERSION"
+          echo "Nuget was created successfully: $VERSION"
       - name: Push to Nuget
         run: dotnet nuget push nuget/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{secrets.NUGET_KEY}} --skip-duplicate
