@@ -18,7 +18,6 @@ env:
 jobs:
   deploy:
     name: 'Deploy to Nuget'
-    if: github.event_name == 'release'
     runs-on: windows-2019
 
     steps:
