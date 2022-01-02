@@ -41,7 +41,7 @@ jobs:
         run: dotnet build src/${{ env.PROJECT_NAME }}.sln -c Release --no-restore
       - name: Create Release NuGet package
         run: |
-        $VERSION = ""
+        VERSION=""
         if($GITHUB_REF_NAME[0] -eq "v"){
           $VERSION=$GITHUB_REF_NAME.substring(1)
         } else {
