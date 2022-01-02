@@ -26,6 +26,10 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.x
+      - name: Install dependencies
+        run: dotnet restore src/${{ env.PROJECT_NAME }}.sln
+      - name: Build solution
+        run: dotnet build src/${{ env.PROJECT_NAME }}.sln -c Release --no-restore
       - name: Create Release NuGet package
         run: |
           $VERSION=${env:GITHUB_REF_NAME}
