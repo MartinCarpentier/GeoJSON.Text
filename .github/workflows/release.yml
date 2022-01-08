@@ -18,6 +18,7 @@ env:
 jobs:
   deploy:
     name: 'Deploy to Nuget'
+    if: github.event_name == 'release'
     runs-on: windows-2019
 
     steps:
@@ -39,11 +40,11 @@ jobs:
           if($VERSION[0] -eq "v"){
             $VERSION=$VERSION.substring(1)
           }
-
           if(!($VERSION -match ${env:NUGET_VERSIONING_REGEX})) {
-            throw "Release tag did not contain a valid NUGET version. TAG : ${env:GITHUB_REF_NAME}"
+            throw "Release tag did not contain a valid NUGET version. TAG was : ${env:GITHUB_REF_NAME}"
           }
-          
-          echo "Nuget was created successfully: $VERSION"
+          dotnet pack -v normal -c Release --include-symbols --include-source -p:PackageVersion=$VERSION -o nupkg src/${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj
       - name: Push to Nuget
-        run: dotnet nuget push nuget/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{secrets.NUGET_KEY}} --skip-duplicate
+        run: |
+          ls
+          pwd
