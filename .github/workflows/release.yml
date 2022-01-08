@@ -1,7 +1,9 @@
 name: 'Release' 
 
 on:
-  push:
+  release:
+    types: 
+      - published
 
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
@@ -48,3 +50,4 @@ jobs:
         run: |
           ls
           pwd
+          dotnet nuget push nuget/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{secrets.NUGET_KEY}} --skip-duplicate
