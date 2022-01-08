@@ -50,4 +50,6 @@ jobs:
         run: |
           ls
           pwd
-          dotnet nuget push nuget/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{secrets.NUGET_KEY}} --skip-duplicate
+          cd nupkg 
+          ls
+          dotnet nuget push nupkg/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{secrets.NUGET_KEY}} --skip-duplicate
