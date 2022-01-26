@@ -24,14 +24,14 @@ jobs:
     runs-on: windows-2019
 
     steps:
+      - name: Release version to build
+        run:  echo "Attempting to build release - ${{ env.PROJECT_NAME }}.$VERSION"
       - uses: actions/checkout@v2
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: |
             3.1.x
-            5.0.x
-            6.0.x
       - name: Install dependencies
         run: dotnet restore src/${{ env.PROJECT_NAME }}.sln
       - name: Build solution
