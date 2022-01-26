@@ -24,7 +24,7 @@ jobs:
     runs-on: windows-2019
 
     steps:
-        - name: Validate release version
+      - name: Validate release version
         run: |
           $VERSION=${env:GITHUB_REF_NAME}
           if($VERSION[0] -eq "v"){
@@ -34,7 +34,7 @@ jobs:
             throw "Release tag did not contain a valid NUGET version. TAG was : ${env:GITHUB_REF_NAME}"
           }
           echo "Version to use is - $VERSION"
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "release_version=$VERSION" | Out-File -FilePath $env:GITHUB_ENV -Append
       - name: Release version to build
         run: |
-          echo "Release version is ${{ env.VERSION }}"
+          echo "Release version is ${{ env.release_version }}"
