@@ -25,30 +25,9 @@ jobs:
 
     steps:
       - name: Release version to build
-        run:  echo "Attempting to build release - ${{ env.PROJECT_NAME }}.$VERSION"
-      - uses: actions/checkout@v2
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: |
-            3.1.x
-      - name: Install dependencies
-        run: dotnet restore src/${{ env.PROJECT_NAME }}.sln
-      - name: Build solution
-        run: dotnet build src/${{ env.PROJECT_NAME }}.sln -c Release --no-restore
-      - name: Create Release NuGet package
         run: |
           $VERSION=${env:GITHUB_REF_NAME}
           if($VERSION[0] -eq "v"){
             $VERSION=$VERSION.substring(1)
           }
-          if(!($VERSION -match ${env:NUGET_VERSIONING_REGEX})) {
-            throw "Release tag did not contain a valid NUGET version. TAG was : ${env:GITHUB_REF_NAME}"
-          }
-          dotnet pack -v normal -c Release --include-symbols --include-source -p:PackageVersion=$VERSION -o nupkg src/${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj
-      - name: Push to Nuget
-        run: |
-          gci ./nupkg/*.nupkg |
-            sort LastWriteTime -Descending |
-            select -First 1 |
-            % { echo $_.FullName }
+          echo "Attempting to build release - ${{ env.PROJECT_NAME }}.$VERSION"
