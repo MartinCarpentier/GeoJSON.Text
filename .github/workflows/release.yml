@@ -24,7 +24,7 @@ jobs:
     runs-on: windows-2019
 
     steps:
-        - name: Validate release version
+      - name: Validate release version
         run: |
           $VERSION=${env:GITHUB_REF_NAME}
           if($VERSION[0] -eq "v"){
